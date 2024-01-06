@@ -15,7 +15,14 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:2.0.3'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
     implementation group: 'com.launchdarkly', name: 'okhttp-eventsource', version: '2.5.0'
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    //jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+    implementation 'com.opencsv:opencsv:5.5'
 }
+
 
 test {
     useJUnitPlatform()

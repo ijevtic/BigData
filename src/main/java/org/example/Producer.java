@@ -40,7 +40,7 @@ public class Producer {
 
         eventSource.start();
 
-        TimeUnit.MINUTES.sleep(1);
+        TimeUnit.MINUTES.sleep(3);
 
         // create producer record
 //        ProducerRecord<String, String> record1 = new ProducerRecord<>("topic1", "hello world");
