@@ -1,4 +1,4 @@
-package org.example;
+package org.example.producers;
 
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.MessageEvent;

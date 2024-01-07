@@ -1,9 +1,11 @@
-package org.example;
+package org.example.consumers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.example.util.CsvWriter;
+import org.example.types.WikiEntry;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,12 +13,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static org.example.CsvWriter.header;
 
-
-public class Consumer {
+public class Consumer extends ConsumerAbstract{
     private static final Logger logger = Logger.getLogger(Consumer.class.getSimpleName());
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/wiki.csv";
 
@@ -25,20 +24,12 @@ public class Consumer {
 
         String groupId = "my-group";
         String topic = "wikitopic";
-        Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getConsumerProperties(groupId));
 
         consumer.subscribe(List.of(topic));
 
         List<WikiEntry> wikiEntries = new ArrayList<>();
-
-
 
         int i = 0;
         while (i < 3000) {
@@ -72,7 +63,25 @@ public class Consumer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
+    public static String[] header = {
+            "$schema",
+            "type",
+            "title",
+            "comment",
+            "timestamp",
+            "user",
+            "bot",
+            "minor",
+            "patrolled",
+            "length_old",
+            "length_new",
+            "revision_old",
+            "revision_new",
+            "server_url",
+            "server_name",
+            "wiki",
+//            "parsed_comment_span_dir_auto",
+//            "parsed_comment_span_class_auto_comment",
+    };
 }

@@ -1,10 +1,9 @@
-package org.example;
+package org.example.producers;
 
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.net.URI;
@@ -42,18 +41,7 @@ public class Producer {
 
         TimeUnit.MINUTES.sleep(3);
 
-        // create producer record
-//        ProducerRecord<String, String> record1 = new ProducerRecord<>("topic1", "hello world");
-//        ProducerRecord<String, String> record2 = new ProducerRecord<>("topic1", "druga poruka");
-
-
-
-//        producer.send(record1);
-//        producer.send(record2);
-//
-//        producer.flush();
-//
-//        producer.close();
+        producer.close();
 
     }
 

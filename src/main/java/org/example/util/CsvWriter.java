@@ -1,43 +1,10 @@
-package org.example;
+package org.example.util;
 
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import java.io.*;
-import java.util.List;
+import org.example.types.Earnings;
+import org.example.types.StockData;
+import org.example.types.WikiEntry;
 
 public class CsvWriter {
-
-    static String[] header = {
-            "$schema",
-            "type",
-            "title",
-            "comment",
-            "timestamp",
-            "user",
-            "bot",
-            "minor",
-            "patrolled",
-            "length_old",
-            "length_new",
-            "revision_old",
-            "revision_new",
-            "server_url",
-            "server_name",
-            "wiki",
-//            "parsed_comment_span_dir_auto",
-//            "parsed_comment_span_class_auto_comment",
-    };
-
-//    public static void main(String[] args) {
-//
-//
-//        // Sample WikiEntry
-//        WikiEntry wikiEntry = createSampleWikiEntry();
-//
-//        // Write WikiEntry to CSV
-//        writeWikiEntryToCsv(wikiEntry);
-//    }
 
     public static String[] getDataFromWikiEntry(WikiEntry wikiEntry) {
         try {
@@ -64,6 +31,38 @@ public class CsvWriter {
             return data;
         } catch (Exception e) {
             System.out.println(wikiEntry);
+        }
+        return null;
+
+    }
+
+    public static String[] getDataFromEarnings(Earnings earnings) {
+        try {
+            String[] data = {
+                    earnings.getDate(),
+                    earnings.getEps().toString(),
+            };
+            return data;
+        } catch (Exception e) {
+            System.out.println(earnings);
+        }
+        return null;
+
+    }
+
+    public static String[] getDataFromStockData(StockData stockData) {
+        try {
+            String[] data = {
+                    stockData.getOpen(),
+                    stockData.getHigh(),
+                    stockData.getLow(),
+                    stockData.getClose(),
+                    stockData.getVolume(),
+                    stockData.getDate(),
+            };
+            return data;
+        } catch (Exception e) {
+            System.out.println(stockData);
         }
         return null;
 
