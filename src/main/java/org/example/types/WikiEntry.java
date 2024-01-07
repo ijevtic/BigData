@@ -1,4 +1,4 @@
-package org.example;
+package org.example.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,7 +60,7 @@ public class WikiEntry {
 
     // Length class
     @Data
-    static class Length {
+    public static class Length {
         @JsonProperty("old")
         private int old;
 
@@ -70,7 +70,7 @@ public class WikiEntry {
 
     // Revision class
     @Data
-    static class Revision {
+    public static class Revision {
         @JsonProperty("old")
         private long old;
 
