@@ -39,7 +39,7 @@ public class Producer {
 
         eventSource.start();
 
-        TimeUnit.MINUTES.sleep(30);
+        TimeUnit.MINUTES.sleep(60);
 
         producer.close();
 
