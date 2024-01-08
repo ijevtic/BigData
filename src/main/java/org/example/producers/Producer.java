@@ -11,6 +11,8 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import static org.example.util.Constants.WIKI_TOPIC;
+
 public class Producer {
     private static final Logger logger = Logger.getLogger(Producer.class.getSimpleName());
 
@@ -29,9 +31,7 @@ public class Producer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        String topic = "wikitopic";
-
-        EventHandler eventHandler = new MediaChangeHandler(producer, topic);
+        EventHandler eventHandler = new MediaChangeHandler(producer, WIKI_TOPIC);
 
         String url = "https://stream.wikimedia.org/v2/stream/recentchange";
         EventSource.Builder builder = new EventSource.Builder(eventHandler, URI.create(url));
@@ -39,7 +39,7 @@ public class Producer {
 
         eventSource.start();
 
-        TimeUnit.MINUTES.sleep(3);
+        TimeUnit.MINUTES.sleep(30);
 
         producer.close();
 

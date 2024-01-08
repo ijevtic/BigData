@@ -2,8 +2,6 @@ package org.example.consumers;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.example.types.CryptoData;
-import org.example.types.Earnings;
-import org.example.types.StockData;
 import org.example.util.CsvWriter;
 
 import java.io.BufferedWriter;
@@ -14,9 +12,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static org.example.util.Constants.CRYPTO_TOPIC;
-import static org.example.util.Constants.EARNINGS_TOPIC;
 
-public class AlphaVantageConsumerCrypto extends ConsumerAbstract{
+public class AlphaVantageConsumerCrypto extends ConsumerAbstract {
     private static final Logger logger = Logger.getLogger(AlphaVantageConsumerEarnings.class.getSimpleName());
 
     private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/cryptoETH.csv";

@@ -8,10 +8,9 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import static org.example.util.Constants.MONTHLY_TOPIC;
-import static org.example.util.Constants.SYMBOL;
+import static org.example.util.Constants.*;
 
-public class AlphaVantageProducerMonthly extends AlphaProducerAbstract {
+public class AlphaVantageProducerDaily extends AlphaProducerAbstract {
 
     static Logger logger = Logger.getLogger(AlphaVantageProducerMonthly.class.getSimpleName());
 
@@ -19,11 +18,12 @@ public class AlphaVantageProducerMonthly extends AlphaProducerAbstract {
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProducerProperties());
 
         try {
-            String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=" + SYMBOL +"&apikey=" + alphaVantageKey;
+            String url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&" +
+                    "outputsize=full&symbol=" + SYMBOL +"&apikey=" + alphaVantageKey;
             String jsonString = fetchDataFromApi(url);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
-            JsonNode timeSeries = jsonNode.get("Monthly Time Series");
+            JsonNode timeSeries = jsonNode.get("Time Series (Daily)");
 
             timeSeries.fields().forEachRemaining(entry -> {
                 String date = entry.getKey();
@@ -31,7 +31,7 @@ public class AlphaVantageProducerMonthly extends AlphaProducerAbstract {
 
                 String messageValue = data.toString();
 
-                ProducerRecord<String, String> record = new ProducerRecord<>(MONTHLY_TOPIC, date, messageValue);
+                ProducerRecord<String, String> record = new ProducerRecord<>(DAILY_TOPIC, date, messageValue);
                 producer.send(record);
                 logger.info("Sending message: " + date);
                 logger.info("Sending message: " + messageValue);

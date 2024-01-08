@@ -1,9 +1,6 @@
 package org.example.util;
 
-import org.example.types.CryptoData;
-import org.example.types.Earnings;
-import org.example.types.StockData;
-import org.example.types.WikiEntry;
+import org.example.types.*;
 
 public class CsvWriter {
 
@@ -52,6 +49,24 @@ public class CsvWriter {
     }
 
     public static String[] getDataFromStockData(StockData stockData) {
+        try {
+            String[] data = {
+                    stockData.getOpen(),
+                    stockData.getHigh(),
+                    stockData.getLow(),
+                    stockData.getClose(),
+                    stockData.getVolume(),
+                    stockData.getDate(),
+            };
+            return data;
+        } catch (Exception e) {
+            System.out.println(stockData);
+        }
+        return null;
+
+    }
+
+    public static String[] getDataFromStockData(StockDataDaily stockData) {
         try {
             String[] data = {
                     stockData.getOpen(),

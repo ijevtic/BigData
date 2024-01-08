@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static org.example.util.Constants.EARNINGS_TOPIC;
+import static org.example.util.Constants.SYMBOL;
 
 public class AlphaVantageConsumerEarnings extends ConsumerAbstract{
     private static final Logger logger = Logger.getLogger(AlphaVantageConsumerEarnings.class.getSimpleName());
 
-    private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/earningsIBM.csv";
+    private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/earnings" + SYMBOL + ".csv";
 
     public static void main(String[] args) throws IOException {
         logger.info("Kafka Simple Consumer");

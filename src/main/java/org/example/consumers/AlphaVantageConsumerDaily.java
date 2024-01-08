@@ -1,8 +1,8 @@
 package org.example.consumers;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.example.types.Earnings;
 import org.example.types.StockData;
+import org.example.types.StockDataDaily;
 import org.example.util.CsvWriter;
 
 import java.io.BufferedWriter;
@@ -12,25 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.example.util.Constants.MONTHLY_TOPIC;
-import static org.example.util.Constants.SYMBOL;
+import static org.example.util.Constants.*;
 
-public class AlphaVantageConsumerMonthly extends ConsumerAbstract{
+public class AlphaVantageConsumerDaily extends ConsumerAbstract{
     private static final Logger logger = Logger.getLogger(AlphaVantageConsumerMonthly.class.getSimpleName());
-    private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/monthly" + SYMBOL + ".csv";
+    private static final String CSV_FILE_PATH = "/home/ijevtic/Desktop/daily" + SYMBOL + ".csv";
 
 
     public static void main(String[] args) throws IOException {
         logger.info("Kafka Simple Consumer");
 
         String groupId = "g3";
-        String topic = MONTHLY_TOPIC;
+        String topic = DAILY_TOPIC;
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getConsumerProperties(groupId));
 
         consumer.subscribe(List.of(topic));
 
-        List<StockData> stockDataEntries = new ArrayList<>();
+        List<StockDataDaily> stockDataEntries = new ArrayList<>();
 
         int i = 0;
         while (i < 100) {
@@ -38,7 +37,7 @@ public class AlphaVantageConsumerMonthly extends ConsumerAbstract{
             logger.info("Polling...");
             consumer.poll(100).forEach(record -> {
                 try {
-                    StockData w = StockData.fromJson(record.value(), objectMapper);
+                    StockDataDaily w = StockDataDaily.fromJson(record.value(), objectMapper);
                     w.setDate(record.key());
                     logger.info(w.toString());
                     stockDataEntries.add(w);
@@ -55,7 +54,7 @@ public class AlphaVantageConsumerMonthly extends ConsumerAbstract{
             writer.newLine();
 
             // Write each WikiEntry to the CSV file
-            for (StockData entry : stockDataEntries) {
+            for (StockDataDaily entry : stockDataEntries) {
                 String[] data = CsvWriter.getDataFromStockData(entry);
                 if(data == null) continue;
 

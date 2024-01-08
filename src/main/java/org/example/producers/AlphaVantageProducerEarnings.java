@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import static org.example.util.Constants.EARNINGS_TOPIC;
+import static org.example.util.Constants.SYMBOL;
 
 public class AlphaVantageProducerEarnings extends AlphaProducerAbstract{
 
@@ -20,7 +21,7 @@ public class AlphaVantageProducerEarnings extends AlphaProducerAbstract{
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProducerProperties());
 
         try {
-            String url = "https://www.alphavantage.co/query?function=EARNINGS&symbol=IBM&apikey=" + alphaVantageKey;
+            String url = "https://www.alphavantage.co/query?function=EARNINGS&symbol=" + SYMBOL + "&apikey=" + alphaVantageKey;
             String jsonString = fetchDataFromApi(url);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);

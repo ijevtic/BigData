@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import static org.example.util.Constants.WIKI_TOPIC;
+
 
 public class Consumer extends ConsumerAbstract{
     private static final Logger logger = Logger.getLogger(Consumer.class.getSimpleName());
@@ -23,16 +25,15 @@ public class Consumer extends ConsumerAbstract{
         logger.info("Kafka Simple Consumer");
 
         String groupId = "my-group";
-        String topic = "wikitopic";
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getConsumerProperties(groupId));
 
-        consumer.subscribe(List.of(topic));
+        consumer.subscribe(List.of(WIKI_TOPIC));
 
         List<WikiEntry> wikiEntries = new ArrayList<>();
 
         int i = 0;
-        while (i < 3000) {
+        while (i < 500) {
             i++;
             logger.info("Polling...");
             consumer.poll(100).forEach(record -> {
